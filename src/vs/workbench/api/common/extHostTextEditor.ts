@@ -16,6 +16,7 @@ import type * as vscode from 'vscode';
 import { ILogService } from 'vs/platform/log/common/log';
 import { Lazy } from 'vs/base/common/lazy';
 import { IExtensionDescription } from 'vs/platform/extensions/common/extensions';
+import { EncodingMode } from 'vs/workbench/services/textfile/common/textfiles';
 
 export class TextEditorDecorationType {
 
@@ -566,6 +567,12 @@ export class ExtHostTextEditor {
 			},
 			hide() {
 				_proxy.$tryHideEditor(id);
+			},
+			getEncoding(): Promise<string | undefined> {
+				return _proxy.$tryGetEncoding(id);
+			},
+			setEncoding(encoding: string, mode: EncodingMode): Promise<void> {
+				return _proxy.$trySetEncoding(id, encoding, mode);
 			}
 		});
 	}
